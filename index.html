@@ -1,537 +1,882 @@
 ---
 layout: null
 ---
-
-
+  
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-language" content="en">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="juicyads-site-verification" content="e93b42d348d8bafda4cea2493dd4b472">
     
-    <script>
-    (function() {
-        var hostname = location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        var formatText = function(str) {
-            return str.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-        };
-        var displayDomain = formatText(fullName);
-        document.title = displayDomain + " - Stunning Photo Collection";
-        var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
-        metaDesc.name = "description";
-        metaDesc.content = displayDomain + " - Discover breathtaking photography collections.";
-        if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
-        var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
-        canonical.setAttribute("rel", "canonical");
-        canonical.setAttribute("href", location.href);
-        if (!canonical.parentNode) document.head.appendChild(canonical);
-        var schemaData = {"@context":"https://schema.org","@type":"WebSite","name":displayDomain,"description":"Beautiful photo gallery","url":location.origin};
-        var schemaScript = document.createElement("script");
-        schemaScript.type = "application/ld+json";
-        schemaScript.textContent = JSON.stringify(schemaData);
-        document.head.appendChild(schemaScript);
-    })();
-    </script>
-
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-
+    <!-- Dynamic Canonical Link -->
+    <link id="dynamic-canonical" rel="canonical" href="">
+    
+    <title id="dynamic-title">Digital Encyclopedia | Media Archive</title>
+    <meta id="dynamic-description" name="description" content="Comprehensive digital encyclopedia featuring media archives, visual collections, and documented histories.">
+    
     <style>
-        /* ===== RESET & BASE ===== */
-        *,*::before,*::after{box-sizing:border-box}
-        html{overflow-x:hidden;background:#0a0a0f;scroll-behavior:smooth}
-        body{
-            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
-            background:#0a0a0f;font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,sans-serif;
-            color:#e0e0e0;line-height:1.4;-webkit-font-smoothing:antialiased;
+        /* GLOBAL CSS VARIABLES FOR EASY EDITING */
+        :root {
+            --color-bg: #f8fafc;
+            --color-text-primary: #0f172a;
+            --color-text-secondary: #475569;
+            --color-text-muted: #64748b;
+            --color-text-light: #94a3b8;
+            --color-text-link: #3b82f6;
+            --color-text-heading: #1e293b;
+            --color-border: #e2e8f0;
+            --color-bg-card: white;
+            --color-bg-highlight: #f1f5f9;
+            --color-bg-info: #fef9e3;
+            --color-border-info: #eab308;
+            --color-gradient-start: #0f172a;
+            --color-gradient-end: #3b82f6;
+            --color-tag-bg: #e2e8f0;
         }
-
-        /* ===== TOP BAR ===== */
-        .topbar{
-            width:100%;position:fixed;top:0;left:0;z-index:1000;
-            background:rgba(10,10,15,.95);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-            border-bottom:1px solid rgba(245,158,11,.1);
-            padding:10px 16px;display:flex;align-items:center;gap:12px;
+        
+        /* MODERN ENCYCLOPEDIA STYLE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .topbar-avatar{flex-shrink:0;line-height:0}
-        .topbar-avatar svg{width:30px;height:30px}
-        .topbar-title{
-            flex:1;font-size:15px;font-weight:700;color:#fff;letter-spacing:.3px;
-            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text-primary);
+            line-height: 1.5;
         }
-        .topbar-menu{
-            width:38px;height:38px;flex-shrink:0;
-            background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);
-            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
-            border-radius:50%;transition:all .2s;
+        
+        /* CONTAINER */
+        .encyclopedia {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem;
         }
-        .topbar-menu:active{background:rgba(245,158,11,.2);transform:scale(.94)}
-        .topbar-menu svg{width:20px;height:20px;stroke:#f59e0b;fill:none;stroke-width:2;stroke-linecap:round}
-
-        .slide-panel{
-            display:none;position:fixed;top:50px;right:10px;z-index:999;
-            background:#1a1a20;border:1px solid rgba(245,158,11,.15);border-radius:14px;padding:6px;
-            min-width:200px;box-shadow:0 12px 40px rgba(0,0,0,.7);
+        
+        /* HEADER */
+        .encyclopedia-header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 2rem;
         }
-        .slide-panel.open{display:block}
-        .slide-panel ul{list-style:none;margin:0;padding:0}
-        .slide-panel li+li{border-top:1px solid rgba(255,255,255,.03)}
-        .slide-panel a{
-            display:block;padding:13px 16px;color:#bbb;text-decoration:none;
-            font-size:14px;font-weight:500;border-radius:10px;transition:all .15s;
+        
+        .encyclopedia-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
-        .slide-panel a:active{background:rgba(245,158,11,.1);color:#f59e0b}
-
-        /* ===== DESKTOP NAV ===== */
-        .desktop-nav{display:none}
-
-        /* ===== AD CONTAINER ===== */
-        .ad-box{
-            display:flex;justify-content:center;align-items:center;
-            margin:0 auto;max-width:100%;overflow:hidden;
-            background:#111118;min-height:50px;border-radius:8px;
+        
+        .encyclopedia-sub {
+            color: var(--color-text-secondary);
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
         }
-        .ad-box ins{max-width:100%}
-        .ad-desktop{display:none}
-        .ad-mobile{display:flex}
-        .ad-both{display:flex}
-
-        .ad-banner-full{
-            padding:14px 8px;background:#111118;margin:0;
-            border-top:1px solid rgba(245,158,11,.06);
-            border-bottom:1px solid rgba(245,158,11,.06);
+        
+        /* BREADCRUMB - RICH SNIPPET */
+        .breadcrumb {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--color-border);
         }
-        .ad-banner-full:first-child{margin-top:50px}
-
-        .ad-native{padding:8px 0;background:transparent}
-
-        /* ===== MAIN CONTENT ===== */
-        .main-content{width:100%;max-width:1200px;margin:0 auto;padding:0}
-
-        /* ===== HERO (16:9) ===== */
-        .hero-section{margin:0}
-        .hero-card{
-            position:relative;overflow:hidden;border-radius:0;
-            background:#111;margin:0;
-            aspect-ratio:16/9;
+        
+        .breadcrumb a {
+            color: var(--color-text-link);
+            text-decoration: none;
         }
-        .hero-card a{display:block;width:100%;height:100%}
-        .hero-card img{
-            width:100%;height:100%;object-fit:cover;display:block;
-            transition:transform .5s ease;
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
         }
-        .hero-card:hover img{transform:scale(1.02)}
-        .hero-overlay{
-            position:absolute;bottom:0;left:0;right:0;
-            padding:40px 16px 16px;
-            background:linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.4) 50%, transparent 100%);
-            pointer-events:none;
+        
+        .breadcrumb span {
+            color: var(--color-text-primary);
+            font-weight: 600;
         }
-        .hero-overlay h2{
-            margin:0 0 4px;font-size:22px;font-weight:800;color:#fff;line-height:1.2;
-            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+        
+        /* TYPOGRAPHY - SEO OPTIMIZED */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--color-text-primary);
         }
-        .hero-badge{
-            display:inline-block;padding:3px 8px;margin-bottom:6px;
-            background:#f59e0b;color:#000;font-size:10px;font-weight:700;
-            border-radius:3px;text-transform:uppercase;letter-spacing:.5px;
+        
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            padding-top: 0.5rem;
+            border-top: 2px solid var(--color-border);
+            color: var(--color-text-heading);
         }
-
-        /* ===== SECTION HEADER ===== */
-        .section-header{
-            display:flex;align-items:center;gap:10px;padding:20px 12px 8px;
-            max-width:1200px;margin:0 auto;
+        
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.25rem 0 0.75rem;
+            color: var(--color-text-muted);
         }
-        .section-header h2{
-            margin:0;font-size:17px;font-weight:800;color:#fff;
-            display:flex;align-items:center;gap:8px;
+        
+        .lead {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
         }
-        .section-header h2 .icon-dot{
-            width:8px;height:8px;border-radius:50%;background:#f59e0b;
-            display:inline-block;flex-shrink:0;
+        
+        /* CARDS & GRIDS */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 1.5rem 0;
         }
-
-        /* ===== HORIZONTAL SCROLL (3:4 portrait) ===== */
-        .scroll-section{padding:0 0 0 12px}
-        .scroll-row{
-            display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;
-            -webkit-overflow-scrolling:touch;padding-bottom:8px;
-            scrollbar-width:none;
+        
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 1.5rem 0;
         }
-        .scroll-row::-webkit-scrollbar{display:none}
-        .scroll-card{
-            flex:0 0 180px;scroll-snap-align:start;
-            position:relative;overflow:hidden;border-radius:10px;
-            background:#15151a;transition:all .2s;
-            aspect-ratio:3/4;
+        
+        @media (max-width: 900px) {
+            .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .encyclopedia { padding: 1rem; }
+            h1 { font-size: 1.8rem; }
         }
-        .scroll-card:active{transform:scale(.98)}
-        .scroll-card a{display:block;width:100%;height:100%}
-        .scroll-card img{
-            width:100%;height:100%;object-fit:cover;display:block;
-            transition:transform .4s ease;
+        
+        @media (max-width: 600px) {
+            .grid-3, .grid-4 { grid-template-columns: 1fr; }
         }
-        .scroll-card-body{
-            position:absolute;bottom:0;left:0;right:0;
-            padding:20px 10px 8px;
-            background:linear-gradient(to top, rgba(0,0,0,.88) 0%, transparent 100%);
-            pointer-events:none;
+        
+        .card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: all 0.2s;
         }
-        .scroll-card-body h3{
-            margin:0 0 2px;font-size:12px;font-weight:700;color:#fff;
-            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+        
+        .card:hover {
+            border-color: var(--color-text-link);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
-
-        /* ===== GRID (1:1 square) ===== */
-        .grid-section{padding:0 8px}
-        .grid-masonry{
-            display:grid;grid-template-columns:1fr 1fr;gap:6px;
-            max-width:1200px;margin:0 auto;
+        
+        .card h3 {
+            margin-top: 0;
+            font-size: 1rem;
         }
-        .grid-card{
-            position:relative;overflow:hidden;border-radius:8px;
-            background:#111118;transition:all .2s;
-            aspect-ratio:1/1;
+        
+        .card p {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.75rem;
         }
-        .grid-card:active{transform:scale(.98)}
-        .grid-card a{display:block;width:100%;height:100%}
-        .grid-card img{
-            width:100%;height:100%;object-fit:cover;display:block;
-            transition:transform .4s ease;
+        
+        /* STATS SECTION */
+        .stats-panel {
+            background: var(--color-bg-highlight);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
-        .grid-card-overlay{
-            position:absolute;bottom:0;left:0;right:0;
-            padding:20px 8px 8px;
-            background:linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 100%);
-            pointer-events:none;
+        
+        .stat {
+            text-align: center;
         }
-        .grid-card-overlay h3{
-            margin:0 0 2px;font-size:11px;font-weight:700;color:#fff;
-            display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-text-link);
         }
-        .grid-card-overlay span{
-            font-size:8px;color:rgba(255,255,255,.4);display:block;margin-top:1px;
+        
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-muted);
         }
-
-        /* Iklan native di dalam grid */
-        .ad-native-card{
-            background:transparent;border-radius:8px;
-            display:flex;justify-content:center;align-items:center;
-            min-height:120px;aspect-ratio:1/1;
+        
+        /* ENTRY LIST - FOR SEO LINKS */
+        .entry-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin: 1rem 0;
         }
-
-        /* ===== EMPTY STATE ===== */
-        .empty-section{
-            text-align:center;padding:60px 16px;
+        
+        .entry-link {
+            display: block;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 0.9rem;
         }
-        .empty-section p{
-            color:rgba(255,255,255,.3);font-size:14px;margin:0;
+        
+        .entry-link a {
+            color: var(--color-text-heading);
+            text-decoration: none;
+            font-weight: 500;
         }
-
-        /* ============================
-           TABLET (min-width:600px)
-           ============================ */
-        @media(min-width:600px){
-            .ad-desktop{display:flex}
-            .ad-mobile{display:none}
-            .ad-both{display:flex}
-
-            .topbar{padding:12px 20px}
-            .topbar-title{font-size:16px}
-            .ad-banner-full:first-child{margin-top:54px}
-            .ad-banner-full{padding:16px 12px}
-            .hero-overlay{padding:50px 24px 20px}
-            .hero-overlay h2{font-size:28px}
-            .section-header{padding:24px 16px 10px}
-            .section-header h2{font-size:20px}
-            .scroll-card{flex:0 0 200px}
-            .scroll-card-body h3{font-size:13px}
-            .grid-masonry{grid-template-columns:repeat(3,1fr);gap:8px}
-            .grid-card{border-radius:10px}
-            .grid-card-overlay h3{font-size:13px}
-            .grid-card-overlay span{font-size:10px}
+        
+        .entry-link a:hover {
+            color: var(--color-text-link);
         }
-
-        /* ============================
-           DESKTOP (min-width:900px)
-           ============================ */
-        @media(min-width:900px){
-            body{max-width:1400px;margin:0 auto}
-            .topbar{
-                left:50%;transform:translateX(-50%);max-width:1400px;
-                padding:12px 24px;
-            }
-            .topbar-title{font-size:14px;font-weight:600;color:#ccc}
-            .topbar-menu{display:none}
-            .slide-panel{display:none!important}
-            .ad-banner-full:first-child{margin-top:56px}
-            .ad-banner-full{padding:18px 16px}
-
-            .hero-overlay{padding:60px 32px 24px}
-            .hero-overlay h2{font-size:36px}
-            .section-header{padding:28px 20px 12px}
-            .scroll-card{flex:0 0 220px}
-            .scroll-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.5)}
-            .scroll-card:hover img{transform:scale(1.06)}
-            .scroll-card-body h3{font-size:14px}
-            .grid-masonry{grid-template-columns:repeat(4,1fr);gap:10px}
-            .grid-card{border-radius:12px}
-            .grid-card:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.4)}
-            .grid-card:hover img{transform:scale(1.04)}
-            .grid-card-overlay h3{font-size:14px}
-            .grid-card-overlay span{font-size:10px}
-
-            .desktop-nav{
-                display:flex;gap:2px;padding:0 20px;max-width:1400px;margin:0 auto 6px;
-            }
-            .desktop-nav a{
-                padding:7px 14px;color:#999;text-decoration:none;font-size:12px;font-weight:500;
-                border-radius:6px;transition:all .15s;
-            }
-            .desktop-nav a:hover{color:#f59e0b;background:rgba(245,158,11,.06)}
+        
+        .entry-meta {
+            font-size: 0.7rem;
+            color: var(--color-text-light);
+            margin-left: 0.5rem;
         }
-
-        @media(min-width:1100px){
-            .scroll-card{flex:0 0 240px}
-            .grid-masonry{grid-template-columns:repeat(5,1fr)}
+        
+        /* FAQ ACCORDION */
+        .faq-section {
+            margin: 2rem 0;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid var(--color-border);
+            padding: 1rem 0;
+        }
+        
+        .faq-question {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-text-primary);
+        }
+        
+        .faq-answer {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+        }
+        
+        /* TAGS */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .tag {
+            background: var(--color-tag-bg);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+        }
+        
+        /* LINKS */
+        a {
+            color: var(--color-text-link);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        hr {
+            margin: 2rem 0;
+            border: none;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        /* UTILITY */
+        .hidden {
+            display: none;
+        }
+        
+        .query-placeholder {
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .default-content.active {
+            display: block;
+        }
+        
+        .default-content {
+            display: none;
+        }
+        
+        .info-box {
+            background: var(--color-bg-info);
+            border-left: 4px solid var(--color-border-info);
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+        }
+        
+        .section-intro {
+            margin-bottom: 1rem;
+            color: var(--color-text-secondary);
+        }
+        
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--color-text-light);
         }
     </style>
+
+  {% include head.html %}
+  </head>
+<body><div loading="lazy">
+<nav>
+{% include /kw/p/page.html %}
+</nav>
+    <div class="encyclopedia">
+        <div class="encyclopedia-header">
+            <div class="encyclopedia-title">ENCYCLOPEDIA DIGITALIS</div>
+            <div class="encyclopedia-sub">Media Archive · Visual Documentation · Biographical Records</div>
+        </div>
+        
+        <main>
+            <!-- ============================================
+                 DEFAULT CONTENT (tampil jika tidak ada query)
+                 ============================================ -->
+            <div id="default-content" class="default-content active">
+                <div class="breadcrumb">
+                    <a href="/">Home</a> / <span>Encyclopedia</span>
+                </div>
+                
+                <h1>Digital Media Encyclopedia</h1>
+                <div class="lead">Comprehensive reference archive documenting contemporary media figures, visual culture, and digital histories.</div>
+                
+                <div class="stats-panel">
+                    <div class="stat"><div class="stat-number">2,500+</div><div class="stat-label">Entries</div></div>
+                    <div class="stat"><div class="stat-number">450+</div><div class="stat-label">Visual Records</div></div>
+                    <div class="stat"><div class="stat-number">120+</div><div class="stat-label">Video Archives</div></div>
+                    <div class="stat"><div class="stat-number">Weekly</div><div class="stat-label">Updates</div></div>
+                </div>
+                
+                <h2>Main Categories</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>📷 Visual Encyclopedia</h3> <!-- Icon "📷" is correct for visual/photo -->
+                        <p>Image collections, photography archives, and visual documentation.</p>
+                        <a href="/file/?q=photo+archives">Browse collection →</a>
+                    </div>
+                    <div class="card">
+                        <h3>🎬 Moving Image Archive</h3>
+                        <p>Video recordings, performances, interviews, and footage.</p>
+                        <a href="/file/?q=video+collections">Browse collection →</a>
+                    </div>
+                    <div class="card">
+                        <h3>📖 Biographical Records</h3>
+                        <p>Verified personal data, career timelines, and public information.</p>
+                        <a href="/file/?q=celebrity+profiles">Browse collection →</a>
+                    </div>
+                    <div class="card">
+                        <h3>🔒 Special Collections</h3> <!-- Fixed typo: changed potentially confusing symbol to standard lock -->
+                        <p>Limited-distribution materials and archival documentation.</p>
+                        <a href="/file/?q=exclusive+collections">Browse collection →</a>
+                    </div>
+                    <div class="card">
+                        <h3>🌐 Digital Footprint</h3>
+                        <p>Cross-platform content from social media and digital spaces.</p>
+                        <a href="/file/?q=platform+archives">Browse collection →</a>
+                    </div>
+                    <div class="card">
+                        <h3>📡 Alternative Sources</h3>
+                        <p>Materials from independent distribution channels.</p>
+                        <a href="/file/?q=leaked+content">Browse collection →</a>
+                    </div>
+                </div>
+                
+                <div class="footer">
+                    Encyclopedia Digitalis · Independent Media Archive · Established 2020
+                </div>
+            </div>
+            
+            <!-- ============================================
+                 QUERY-BASED CONTENT (SEO OPTIMIZED)
+                 ============================================ -->
+            <div id="query-content" style="display: none;">
+                <!-- BREADCRUMB DENGAN QUERY -->
+                <div class="breadcrumb">
+                    <a href="/">Home</a> / <a href="/file/">Encyclopedia</a> / <span id="breadcrumb-name"></span>
+                </div>
+                
+                <!-- H1 DENGAN QUERY -->
+                <h1 id="main-heading"></h1>
+                
+                <!-- META DESCRIPTION AREA (TEXT YANG KAYA QUERY) -->
+                <div class="info-box">
+                    📌 <strong id="meta-keywords"></strong> — Complete encyclopedia entry featuring comprehensive documentation, visual archives, video collections, and biographical records.
+                </div>
+                
+                <!-- INTRO VARIAN - MASING-MASING DENGAN QUERY STRATEGIS -->
+                <div id="intro-leak" class="intro-varian hidden">
+                    <div class="lead">
+                        <strong class="query-placeholder"></strong> leak archive: comprehensive documentation of materials that emerged through alternative distribution channels. This encyclopedia entry contains verified information about <strong class="query-placeholder"></strong> leaked content, private collections, and exclusive materials.
+                    </div>
+                    
+                    <div class="stats-panel">
+                        <div class="stat"><div class="stat-number">450+</div><div class="stat-label"><span class="query-placeholder"></span> Leaked Photos</div></div>
+                        <div class="stat"><div class="stat-number">120+</div><div class="stat-label"><span class="query-placeholder"></span> Leaked Videos</div></div>
+                        <div class="stat"><div class="stat-number">Complete</div><div class="stat-label">Leak Archive</div></div>
+                    </div>
+                    
+                    <h2 id="h2-leaked-photos"><span class="query-placeholder"></span> Leaked Photo Collections</h2>
+                    <div class="entry-grid">
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="leaked+photos">Complete <span class="query-placeholder"></span> Leaked Photo Set</a> <span class="entry-meta">→ Full archive</span></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="rare+leaks">Rare <span class="query-placeholder"></span> Leaked Images</a> <span class="entry-meta">→ Limited circulation</span></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="uncensored">Uncensored <span class="query-placeholder"></span> Leaked Photos</a> <span class="entry-meta">→ Unedited</span></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="professional+photoshoot"><span class="query-placeholder"></span> Leaked Studio Shoots</a> <span class="entry-meta">→ Unreleased</span></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="candid"><span class="query-placeholder"></span> Leaked Candid Moments</a> <span class="entry-meta">→ Private</span></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="behind+the+scenes"><span class="query-placeholder"></span> Leaked BTS Photos</a> <span class="entry-meta">→ Set leaks</span></div>
+                    </div>
+                    
+                    <h2 id="h2-leaked-videos"><span class="query-placeholder"></span> Leaked Video Archive</h2>
+                    <div class="entry-grid">
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="leaked+videos">Complete <span class="query-placeholder"></span> Leaked Video Set</a> <span class="entry-meta">→ Full footage</span></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="performances"><span class="query-placeholder"></span> Leaked Performance Videos</a> <span class="entry-meta">→ Uncut</span></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="interviews"><span class="query-placeholder"></span> Leaked Interview Footage</a> <span class="entry-meta">→ Unedited</span></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="exclusive+clips">Exclusive <span class="query-placeholder"></span> Video Leaks</a> <span class="entry-meta">→ Private</span></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="rare+videos">Rare <span class="query-placeholder"></span> Video Leaks</a> <span class="entry-meta">→ Limited</span></div>
+                    </div>
+                    
+                    <h2 id="h2-exclusive-leaks"><span class="query-placeholder"></span> Exclusive Leak Collections</h2>
+                    <div class="entry-grid">
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="private+collection"><span class="query-placeholder"></span> Private Collection Dumps</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="original+leaks">Original <span class="query-placeholder"></span> Leak Sources</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="unreleased"><span class="query-placeholder"></span> Unreleased Content</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="archive">Complete <span class="query-placeholder"></span> Leak Archive</a></div>
+                    </div>
+                </div>
+                
+                <div id="intro-photo" class="intro-varian hidden">
+                    <div class="lead">
+                        <strong class="query-placeholder"></strong> visual encyclopedia: complete photographic documentation spanning editorial work, candid moments, and private collections. This entry contains all available <strong class="query-placeholder"></strong> photos, images, and visual records.
+                    </div>
+                    
+                    <div class="stats-panel">
+                        <div class="stat"><div class="stat-number">450+</div><div class="stat-label"><span class="query-placeholder"></span> Photos</div></div>
+                        <div class="stat"><div class="stat-number">8+</div><div class="stat-label">Years Documented</div></div>
+                        <div class="stat"><div class="stat-number">12+</div><div class="stat-label">Photographers</div></div>
+                    </div>
+                    
+                    <h2 id="h2-photo-collections"><span class="query-placeholder"></span> Photo Collections by Type</h2>
+                    <div class="entry-grid">
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="professional+photoshoot"><span class="query-placeholder"></span> Professional Photography</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="candid"><span class="query-placeholder"></span> Candid Photos</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="behind+the+scenes"><span class="query-placeholder"></span> Behind the Scenes Images</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="selfie"><span class="query-placeholder"></span> Self Portraits</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="red+carpet"><span class="query-placeholder"></span> Red Carpet Photos</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="magazine+shoot"><span class="query-placeholder"></span> Magazine Features</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="rare+photos">Rare <span class="query-placeholder"></span> Photos</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="high+quality">High Resolution <span class="query-placeholder"></span> Images</a></div>
+                    </div>
+                    
+                    <h2 id="h2-thematic-collections"><span class="query-placeholder"></span> Thematic Visual Collections</h2>
+                    <div class="entry-grid">
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="beach+vacation"><span class="query-placeholder"></span> Vacation Photos</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="workout"><span class="query-placeholder"></span> Fitness Photography</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="lingerie"><span class="query-placeholder"></span> Fashion Editorial</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="gallery">Complete <span class="query-placeholder"></span> Photo Gallery</a></div>
+                    </div>
+                </div>
+                
+                <div id="intro-video" class="intro-varian hidden">
+                    <div class="lead">
+                        <strong class="query-placeholder"></strong> moving image encyclopedia: comprehensive video archive featuring performances, interviews, behind-the-scenes footage, and exclusive recordings. Complete documentation of <strong class="query-placeholder"></strong> video content.
+                    </div>
+                    
+                    <div class="stats-panel">
+                        <div class="stat"><div class="stat-number">120+</div><div class="stat-label"><span class="query-placeholder"></span> Videos</div></div>
+                        <div class="stat"><div class="stat-number">35+</div><div class="stat-label">Interviews</div></div>
+                        <div class="stat"><div class="stat-number">40+</div><div class="stat-label">Performances</div></div>
+                    </div>
+                    
+                    <h2 id="h2-video-collections"><span class="query-placeholder"></span> Video Collections by Category</h2>
+                    <div class="entry-grid">
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="performances"><span class="query-placeholder"></span> Live Performances</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="interviews"><span class="query-placeholder"></span> Interview Videos</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="behind+the+scenes+footage"><span class="query-placeholder"></span> Behind the Scenes Footage</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="exclusive+clips">Exclusive <span class="query-placeholder"></span> Video Clips</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="music+videos"><span class="query-placeholder"></span> Music Video Appearances</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="rare+videos">Rare <span class="query-placeholder"></span> Recordings</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="viral+clips"><span class="query-placeholder"></span> Viral Video Clips</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="high+quality+videos">HD <span class="query-placeholder"></span> Videos</a></div>
+                    </div>
+                </div>
+                
+                <div id="intro-bio" class="intro-varian hidden">
+                    <div class="lead">
+                        <strong class="query-placeholder"></strong> biographical encyclopedia: verified personal information, career timeline, physical attributes, and public records. Complete biographical documentation of <strong class="query-placeholder"></strong>.
+                    </div>
+                    
+                    <h2 id="h2-personal-info"><span class="query-placeholder"></span> Personal Information</h2>
+                    <div class="entry-grid">
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="early+life"><span class="query-placeholder"></span> Early Life & Background</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="age"><span class="query-placeholder"></span> Age & Birth Details</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="height"><span class="query-placeholder"></span> Height & Measurements</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="nationality"><span class="query-placeholder"></span> Nationality & Origin</a></div>
+                    </div>
+                    
+                    <h2 id="h2-professional-info"><span class="query-placeholder"></span> Professional Information</h2>
+                    <div class="entry-grid">
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="career"><span class="query-placeholder"></span> Career Timeline</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="net+worth"><span class="query-placeholder"></span> Net Worth & Earnings</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="relationships"><span class="query-placeholder"></span> Relationships & Family</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="social+media"><span class="query-placeholder"></span> Social Media Presence</a></div>
+                    </div>
+                </div>
+                
+                <div id="intro-platform" class="intro-varian hidden">
+                    <div class="lead">
+                        <strong class="query-placeholder"></strong> digital footprint encyclopedia: comprehensive documentation of platform presence across Instagram, Facebook, Twitter, TikTok, YouTube, and other digital spaces.
+                    </div>
+                    
+                    <h2 id="h2-platform-archives"><span class="query-placeholder"></span> Platform Archives</h2>
+                    <div class="entry-grid">
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="instagram"><span class="query-placeholder"></span> Instagram Archive</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="facebook"><span class="query-placeholder"></span> Facebook Content</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="twitter"><span class="query-placeholder"></span> Twitter/X History</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="tiktok"><span class="query-placeholder"></span> TikTok Videos</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="youtube"><span class="query-placeholder"></span> YouTube Appearances</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="snapchat"><span class="query-placeholder"></span> Snapchat Content</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="discord"><span class="query-placeholder"></span> Discord Archives</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="telegram"><span class="query-placeholder"></span> Telegram Channels</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="reddit"><span class="query-placeholder"></span> Reddit Discussions</a></div>
+                    </div>
+                </div>
+                
+                <div id="intro-general" class="intro-varian hidden">
+                    <div class="lead">
+                        <strong class="query-placeholder"></strong> complete encyclopedia entry: comprehensive documentation including visual archives, video collections, biographical records, and special collections. This is the definitive reference for <strong class="query-placeholder"></strong> content.
+                    </div>
+                    
+                    <h2 id="h2-main-collections"><span class="query-placeholder"></span> Main Collections</h2>
+                    <div class="entry-grid">
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="photos"><span class="query-placeholder"></span> Photo Archive</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="videos"><span class="query-placeholder"></span> Video Archive</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="biography"><span class="query-placeholder"></span> Biography</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="exclusive"><span class="query-placeholder"></span> Exclusive Content</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="leaked"><span class="query-placeholder"></span> Alternative Sources</a></div>
+                        <div class="entry-link"><a href="" class="dynamic-link" data-variant="archive">Complete <span class="query-placeholder"></span> Archive</a></div>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <!-- SECTION 1: COMPREHENSIVE OVERVIEW -->
+                <h2>About <span class="query-placeholder"></span> Encyclopedia Entry</h2>
+                <p>This encyclopedia entry provides comprehensive documentation of <strong class="query-placeholder"></strong> including visual materials, video recordings, biographical information, and special collections. All information is verified and organized for research accessibility.</p>
+                <div class="tag-cloud">
+                    <span class="tag"><span class="query-placeholder"></span> Archive</span>
+                    <span class="tag"><span class="query-placeholder"></span> Documentation</span>
+                    <span class="tag"><span class="query-placeholder"></span> Visual Collection</span>
+                    <span class="tag"><span class="query-placeholder"></span> Video Archive</span>
+                </div>
+                
+                <!-- SECTION 2: VISUAL DOCUMENTATION -->
+                <h2 id="h2-visual-docs"><span class="query-placeholder"></span> Visual Documentation</h2>
+                <div class="entry-grid">
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="professional+photoshoot"><span class="query-placeholder"></span> Professional Photography</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="candid"><span class="query-placeholder"></span> Candid Photography</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="behind+the+scenes"><span class="query-placeholder"></span> Behind the Scenes</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="red+carpet"><span class="query-placeholder"></span> Red Carpet Appearances</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="magazine+shoot"><span class="query-placeholder"></span> Magazine Features</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="rare+photos">Rare <span class="query-placeholder"></span> Images</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="high+quality">High Resolution <span class="query-placeholder"></span> Photos</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="gallery">Complete <span class="query-placeholder"></span> Gallery</a></div>
+                </div>
+                
+                <!-- SECTION 3: VIDEO ARCHIVE -->
+                <h2 id="h2-video-archive"><span class="query-placeholder"></span> Video Archive</h2>
+                <iframe src="https://www.youtube.com/embed/quauvwyOndQ" loading="lazy" style="width:100%;aspect-ratio:9/16;border:0;" allow="fullscreen"></iframe>
+                <div class="entry-grid">
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="performances"><span class="query-placeholder"></span> Live Performances</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="interviews"><span class="query-placeholder"></span> Interview Recordings</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="behind+the+scenes+footage"><span class="query-placeholder"></span> Behind the Scenes Footage</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="exclusive+clips">Exclusive <span class="query-placeholder"></span> Clips</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="rare+videos">Rare <span class="query-placeholder"></span> Recordings</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="high+quality+videos">HD <span class="query-placeholder"></span> Videos</a></div>
+                </div>
+                
+                <!-- SECTION 4: SPECIAL COLLECTIONS -->
+                <h2 id="h2-special-collections"><span class="query-placeholder"></span> Special Collections</h2>
+                <div class="entry-grid">
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="behind+the+scenes">BTS <span class="query-placeholder"></span> Archive</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="private+gatherings"><span class="query-placeholder"></span> Private Events</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="uncensored">Uncensored <span class="query-placeholder"></span> Content</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="rare+unreleased">Unreleased <span class="query-placeholder"></span> Materials</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="exclusive+access">Exclusive <span class="query-placeholder"></span> Access</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="backstage"><span class="query-placeholder"></span> Backstage Archive</a></div>
+                </div>
+                
+                <!-- SECTION 5: PLATFORM ARCHIVES -->
+                <h2 id="h2-platform"><span class="query-placeholder"></span> Platform Archives</h2>
+                <div class="entry-grid">
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="instagram"><span class="query-placeholder"></span> Instagram</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="facebook"><span class="query-placeholder"></span> Facebook</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="twitter"><span class="query-placeholder"></span> Twitter/X</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="tiktok"><span class="query-placeholder"></span> TikTok</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="youtube"><span class="query-placeholder"></span> YouTube</a></div>
+                    <div class="entry-link"><a href="" class="dynamic-link" data-variant="snapchat"><span class="query-placeholder"></span> Snapchat</a></div>
+                </div>
+                
+                <!-- SECTION 6: RELATED ENTRIES -->
+                <h2>Related Encyclopedia Entries</h2>
+                <div class="entry-grid">
+                    <div class="entry-link"><a href="/file/?q=celebrity+profiles">Biographical Encyclopedia</a></div>
+                    <div class="entry-link"><a href="/file/?q=photo+archives">Visual Documentation Archive</a></div>
+                    <div class="entry-link"><a href="/file/?q=video+collections">Moving Image Encyclopedia</a></div>
+                    <div class="entry-link"><a href="/file/?q=exclusive+collections">Special Collections Directory</a></div>
+                    <div class="entry-link"><a href="/file/?q=leaked+content">Alternative Sources Archive</a></div>
+                    <div class="entry-link"><a href="/file/?q=facebook+leaks">Platform Data Archive</a></div>
+                </div>
+                
+                <!-- SECTION 7: FREQUENTLY ASKED QUESTIONS -->
+                <h2>Frequently Asked Questions About <span class="query-placeholder"></span></h2>
+                <div class="faq-section">
+                    <div class="faq-item"><div class="faq-question">What is included in the <span class="query-placeholder"></span> encyclopedia entry?</div><div class="faq-answer">Complete documentation including <a href="" class="dynamic-link" data-variant="photos"><span class="query-placeholder"></span> photos</a>, <a href="" class="dynamic-link" data-variant="videos"><span class="query-placeholder"></span> videos</a>, <a href="" class="dynamic-link" data-variant="biography">biographical information</a>, and <a href="" class="dynamic-link" data-variant="exclusive">special collections</a>.</div></div>
+                    <div class="faq-item"><div class="faq-question">Where can I find <span class="query-placeholder"></span> photos?</div><div class="faq-answer">The <a href="" class="dynamic-link" data-variant="photos"><span class="query-placeholder"></span> photo archive</a> contains complete visual documentation.</div></div>
+                    <div class="faq-item"><div class="faq-question">Are there <span class="query-placeholder"></span> videos available?</div><div class="faq-answer">Yes, the <a href="" class="dynamic-link" data-variant="videos"><span class="query-placeholder"></span> video archive</a> includes performances, interviews, and exclusive footage.</div></div>
+                    <div class="faq-item"><div class="faq-question">What biographical information is documented?</div><div class="faq-answer">The <a href="" class="dynamic-link" data-variant="biography"><span class="query-placeholder"></span> biography section</a> includes personal background, career timeline, and public records.</div></div>
+                    <div class="faq-item"><div class="faq-question">How often is this encyclopedia updated?</div><div class="faq-answer">New materials are added as they become available. The archive is updated weekly.</div></div>
+                </div>
+                
+                <hr>
+                <center>{% include /ads/gobloggugel/nanouturfs.html %}</center>
+                <hr>
+                
+                <!-- SECTION 8: ARCHIVE INFORMATION -->
+                <h2>About This Encyclopedia Entry</h2>
+                <p><strong class="query-placeholder"></strong> encyclopedia entry is maintained as a permanent reference resource. All materials are organized for research accessibility with verified metadata and provenance information where available.</p>
+                <div class="footer" style="margin-top: 1.5rem;">
+                    Encyclopedia Digitalis · Independent Media Archive · <span class="query-placeholder"></span> Complete Entry
+                </div>
+            </div>
+        </main>
+    </div>
     
-{% include head.html %}
-{% include verif.html %}
-
-</head>
-<body>
-
-    <!-- TOPBAR -->
-    <header class="topbar">
-        <div id="domainAvatar" class="topbar-avatar"></div>
-        <span id="blogMainTitle" class="topbar-title"></span>
-        <button class="topbar-menu" id="blogMenuToggle" aria-label="Menu">
-            <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-            <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
-        </button>
-    </header>
-
-    <!-- SLIDE PANEL -->
-    <nav id="blogMenuPanel" class="slide-panel">
-        <ul>
-            <li><a href="/">✦ Home</a></li>
-            <li><a href="/contact/">✉ Contact</a></li>
-            <li><a href="/privacy-policy/">🔒 Privacy</a></li>
-            <li><a href="/terms-and-conditions/">📋 Terms</a></li>
-        </ul>
-    </nav>
-
-    <script>
-    (function(){
-        var host = window.location.hostname.split(".");
-        var sub = host[0];
-        if (sub.toLowerCase() === "www") sub = host[1] || "";
-        var clean = sub.replace(/-/g, " ");
-        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-    })();
-    (function(){
-        var btn = document.getElementById("blogMenuToggle");
-        var panel = document.getElementById("blogMenuPanel");
-        var mi = btn.querySelector("svg:first-child");
-        var ci = btn.querySelector("svg:last-child");
-        btn.addEventListener("click", function(e){
-            e.stopPropagation();
-            var open = panel.classList.toggle("open");
-            mi.style.display = open ? "none" : "block";
-            ci.style.display = open ? "block" : "none";
-        });
-        document.addEventListener("click", function(e){
-            if(!panel.contains(e.target) && !btn.contains(e.target)){
-                panel.classList.remove("open");
-                mi.style.display = "block";ci.style.display = "none";
-            }
-        });
-        panel.addEventListener("click", function(e){e.stopPropagation();});
-    })();
-    </script>
-
-    <!-- AVATAR -->
     <script>
     (function() {
-        var hostname = window.location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        function h(s) {var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
-        var dh = h(fullName);
-        var clean = fullName.replace(/-/g," ");
-        var w = clean.split(" "), init = "";
-        for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
-        if(init.length<2)init=fullName.substring(0,3).toUpperCase();
-        document.getElementById("domainAvatar").innerHTML = "<svg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\"><rect width=\"30\" height=\"30\" rx=\"8\" fill=\"#f59e0b\"/><text x=\"15\" y=\"20\" text-anchor=\"middle\" fill=\"#000\" font-size=\"12\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
+        // Ambil query dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        let query = urlParams.get('q');
+        
+        // Fungsi untuk mendapatkan nama host yang sudah dibersihkan
+        function getCleanHost() {
+            let host = window.location.hostname;
+            // Hapus 'www.' jika ada
+            host = host.replace(/^www\./, '');
+            // Pisahkan bagian-bagian domain
+            const parts = host.split('.');
+            
+            // Jika lebih dari 2 bagian (subdomain ada), ambil subdomainnya
+            if (parts.length > 2) {
+                // Ambil bagian pertama (subdomain)
+                let subdomain = parts[0];
+                // Ubah menjadi Title Case dan ganti '-' menjadi spasi
+                return subdomain.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+            } else {
+                // Jika tidak ada subdomain, ambil nama domain utama (bagian pertama)
+                let domainName = parts[0];
+                return domainName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+            }
+        }
+        
+        const cleanHost = getCleanHost();
+        
+        // Buat canonical link dinamis
+        const canonicalLink = document.getElementById('dynamic-canonical');
+        if (canonicalLink) {
+            canonicalLink.href = window.location.href.split('?')[0];
+        }
+        
+        // Jika tidak ada query, tampilkan default content dan set title/h1 standar
+        if (!query) {
+            document.getElementById('default-content').classList.add('active');
+            
+            // Title untuk halaman tanpa query
+            document.title = `Digital Encyclopedia | Media Archive on ${cleanHost}`;
+            // Update H1 jika diperlukan (opsional, karena default sudah ada)
+            const defaultH1 = document.querySelector('#default-content h1');
+            if (defaultH1) defaultH1.textContent = `Digital Media Encyclopedia on ${cleanHost}`;
+            
+            return;
+        }
+        
+        // Sembunyikan default, tampilkan query content
+        document.getElementById('default-content').classList.remove('active');
+        document.getElementById('default-content').style.display = 'none';
+        document.getElementById('query-content').style.display = 'block';
+        
+        // Decode query
+        query = decodeURIComponent(query.replace(/\+/g, ' '));
+        const originalQuery = query;
+        
+        // Daftar kata yang akan dihapus untuk mendapatkan base name
+        const removeTerms = [
+            '2025', '2024'
+        ];
+        
+        // Fungsi untuk mendapatkan base name
+        function getBaseName(query) {
+            let base = query.toLowerCase();
+            removeTerms.forEach(term => {
+                const regex = new RegExp('\\b' + term + '\\s*', 'gi');
+                base = base.replace(regex, '');
+            });
+            return base.trim() || query;
+        }
+        
+        const baseName = getBaseName(query);
+        
+        // Kapitalisasi baseName untuk tampilan yang lebih baik
+        function toTitleCase(str) {
+            return str.replace(/\w\S*/g, function(txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
+        }
+        const displayName = toTitleCase(baseName);
+        
+        // Deteksi tipe query
+        const queryLower = query.toLowerCase();
+        let queryType = 'general';
+        
+        if (queryLower.includes('leak') || queryLower.includes('leaked') || queryLower.includes('leaks')) {
+            queryType = 'leak';
+        } else if (queryLower.includes('photo') || queryLower.includes('photos') || queryLower.includes('picture') || queryLower.includes('gallery')) {
+            queryType = 'photo';
+        } else if (queryLower.includes('video') || queryLower.includes('videos') || queryLower.includes('clip') || queryLower.includes('footage')) {
+            queryType = 'video';
+        } else if (queryLower.includes('bio') || queryLower.includes('biography') || queryLower.includes('age') || queryLower.includes('height')) {
+            queryType = 'bio';
+        } else if (queryLower.includes('instagram') || queryLower.includes('facebook') || queryLower.includes('twitter') || queryLower.includes('tiktok')) {
+            queryType = 'platform';
+        }
+        
+        // Update title, h1, h2, h3 - SEO OPTIMIZED dengan pola "Query on Host"
+        let title, h1Text, hostIdentifier = cleanHost;
+        
+        // Tentukan varian kalimat
+        const variants = {
+            title: {
+                leak: `${displayName} Leak Archive on ${hostIdentifier} | Complete Encyclopedia Entry`,
+                photo: `${displayName} Photos on ${hostIdentifier} | Complete Visual Encyclopedia`,
+                video: `${displayName} Videos on ${hostIdentifier} | Complete Video Archive`,
+                bio: `${displayName} Biography on ${hostIdentifier} | Complete Encyclopedia Entry`,
+                platform: `${displayName} Platform Archive on ${hostIdentifier} | Digital Footprint`,
+                general: `${displayName} on ${hostIdentifier} | Complete Encyclopedia Entry`
+            },
+            h1: {
+                leak: `${displayName} Leak Archive on ${hostIdentifier}`,
+                photo: `${displayName} Photo Archive on ${hostIdentifier}`,
+                video: `${displayName} Video Archive on ${hostIdentifier}`,
+                bio: `${displayName} Biography on ${hostIdentifier}`,
+                platform: `${displayName} Digital Footprint on ${hostIdentifier}`,
+                general: `${displayName} on ${hostIdentifier}`
+            },
+            h2Prefix: `${displayName} on ${hostIdentifier}`
+        };
+        
+        title = variants.title[queryType] || variants.title.general;
+        h1Text = variants.h1[queryType] || variants.h1.general;
+        const h2MainText = variants.h2Prefix;
+        
+        document.title = title;
+        document.getElementById('dynamic-description').setAttribute('content', 
+            `${displayName} complete encyclopedia entry on ${hostIdentifier}. Comprehensive archive featuring photos, videos, biography, and special collections. Verified documentation and organized research access.`);
+        
+        // Update H1
+        document.getElementById('main-heading').textContent = h1Text;
+        
+        // Update semua H2 dan H3 untuk menyertakan identitas host
+        document.querySelectorAll('#query-content h2').forEach(h2 => {
+            if (h2.hasAttribute('id') && h2.querySelector('.query-placeholder')) {
+                // H2 dengan placeholder: misal "About X Encyclopedia Entry" -> "About X on Host"
+                let currentText = h2.innerHTML;
+                let span = h2.querySelector('.query-placeholder');
+                if (span) {
+                    let newText = currentText.replace(span.outerHTML, span.outerHTML + ' on ' + hostIdentifier);
+                    h2.innerHTML = newText;
+                }
+            } else if (h2.hasAttribute('id')) {
+                // H2 tanpa placeholder (misal "Related Encyclopedia Entries") -> tambahkan host di akhir
+                if (!h2.textContent.includes('on ' + hostIdentifier)) {
+                    h2.textContent = h2.textContent + ' on ' + hostIdentifier;
+                }
+            }
+        });
+        
+        // Update meta keywords box
+        const metaKeywords = document.getElementById('meta-keywords');
+        if (metaKeywords) {
+            metaKeywords.textContent = `${displayName} on ${hostIdentifier} | ${displayName} Leak Archive | ${displayName} Photos | ${displayName} Videos | ${displayName} Biography`;
+        }
+        
+        // Update breadcrumb
+        document.getElementById('breadcrumb-name').textContent = baseName;
+        
+        // Update semua placeholder dengan baseName
+        document.querySelectorAll('.query-placeholder').forEach(el => {
+            el.textContent = displayName;
+        });
+        
+        // Tampilkan intro yang sesuai
+        document.querySelectorAll('.intro-varian').forEach(el => el.classList.add('hidden'));
+        document.getElementById(`intro-${queryType}`).classList.remove('hidden');
+        
+        // Update semua dynamic links
+        function updateLinks() {
+            document.querySelectorAll('.dynamic-link').forEach(link => {
+                const variant = link.getAttribute('data-variant');
+                if (variant) {
+                    link.href = `/file/?q=${encodeURIComponent(baseName + ' ' + variant)}`;
+                }
+            });
+        }
+        
+        updateLinks();
+        
+        // Update semua link yang perlu base name di text
+        document.querySelectorAll('.base-placeholder').forEach(el => {
+            el.textContent = baseName;
+        });
+        
     })();
     </script>
 
-    <!-- BANNER 06: TOP -->
-    <div class="ad-banner-full">
-        <div class="ad-box ad-desktop">{% include /ads/banner/06.html %}</div>
-        <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
-    </div>
+<br />
 
-    <!-- DESKTOP NAV -->
-    <nav class="desktop-nav">
-        <a href="/">Home</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy-policy/">Privacy</a>
-        <a href="/terms-and-conditions/">Terms</a>
-    </nav>
 
-    <!-- ==========================================
-        AMBIL 50 POSTINGAN KATEGORI "indo02"
-        ========================================== -->
-    {% assign all_posts = site.categories['indo02'] | slice: 0, 50 %}
+{% include /ads/gobloggugel/sosmed.html %}
+{% include footer.html %}
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
 
-        {% if all_posts.size > 0 %}
 
-        <!-- ========== HERO: POST 0 (16:9) ========== -->
-        {% assign hero_post = all_posts | first %}
-        <section class="hero-section">
-            <article class="hero-card">
-                <a href="{{ hero_post.url }}">
-                    {% if hero_post.image %}
-                        <img src="{{ hero_post.image | relative_url }}" alt="{{ hero_post.title }}" loading="eager">
-                    {% endif %}
-                    <div class="hero-overlay">
-                        <span class="hero-badge">Featured</span>
-                        <h2>{{ hero_post.title }}</h2>
-                        {% assign hero_desc = hero_post.content | split: '<p>' | first %}
-                        <div class="spo">{{ hero_desc }}</div>
-                    </div>
-                </a>
-            </article>
-        </section>
-
-        <!-- BANNER 01 -->
-        <div class="ad-banner-full">
-            <div class="ad-box ad-desktop">{% include /ads/banner/01.html %}</div>
-            <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
-        </div>
-
-        <!-- ========== TRENDING NOW: POST 1-10 (3:4 portrait scroll) ========== -->
-        {% assign trending = all_posts | slice: 1, 10 %}
-        {% if trending.size > 0 %}
-        <div class="section-header">
-            <h2><span class="icon-dot"></span> Trending Now</h2>
-        </div>
-        <section class="scroll-section">
-            <div class="scroll-row">
-                {% for post in trending %}
-                <article class="scroll-card">
-                    <a href="{{ post.url }}">
-                        {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        {% endif %}
-                        <div class="scroll-card-body">
-                            <h3>{{ post.title }}</h3>
-                            {% assign scroll_desc = post.content | split: '<p>' | first %}
-                            <div class="spo">{{ scroll_desc }}</div>
-                        </div>
-                    </a>
-                </article>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        <!-- BANNER 02 -->
-        <div class="ad-native" style="padding:0 12px;">
-            <div class="ad-box ad-both">{% include /ads/banner/02.html %}</div>
-        </div>
-
-        <!-- ========== LATEST: POST 11-30 (1:1 square grid) ========== -->
-        {% assign latest = all_posts | slice: 11, 20 %}
-        {% if latest.size > 0 %}
-        <div class="section-header">
-            <h2><span class="icon-dot"></span> Latest</h2>
-        </div>
-        <section class="grid-section">
-            <div class="grid-masonry">
-                {% for post in latest %}
-                    {% assign ad_pos = forloop.index %}
-                    <article class="grid-card">
-                        <a href="{{ post.url }}">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                            <div class="grid-card-overlay">
-                                <h3>{{ post.title }}</h3>
-                                {% assign grid_desc = post.content | split: '<p>' | first %}
-                                <div class="spo">{{ grid_desc }}</div>
-                                <span>{{ post.date | date: "%b %d, %Y" }}</span>
-                            </div>
-                        </a>
-                    </article>
-                    {% assign mod = ad_pos | modulo: 5 %}
-                    {% if mod == 0 %}
-                    <div class="ad-native-card">
-                        <div class="ad-box ad-both">{% include /ads/banner/03.html %}</div>
-                    </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        <!-- BANNER 08 -->
-        <div class="ad-banner-full">
-            <div class="ad-box ad-both">{% include /ads/banner/08.html %}</div>
-        </div>
-
-        <!-- ========== YOU MAY LIKE: POST 31-49 (3:4 portrait scroll) ========== -->
-        {% assign more = all_posts | slice: 31, 19 %}
-        {% if more.size > 0 %}
-        <div class="section-header">
-            <h2><span class="icon-dot"></span> You May Like</h2>
-        </div>
-        <section class="scroll-section">
-            <div class="scroll-row">
-                {% for post in more %}
-                <article class="scroll-card">
-                    <a href="{{ post.url }}">
-                        {% if post.image %}
-                            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                        {% endif %}
-                        <div class="scroll-card-body">
-                            <h3>{{ post.title }}</h3>
-                            {% assign more_desc = post.content | split: '<p>' | first %}
-                            <div class="spo">{{ more_desc }}</div>
-                        </div>
-                    </a>
-                </article>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        {% else %}
-        <div class="empty-section" style="margin-top:60px;">
-            <p>🚫 No posts found in category <strong>indo02</strong></p>
-        </div>
-        {% endif %}
-
-    </div>
-
-    <!-- BANNER 07: BOTTOM -->
-    <div class="ad-banner-full">
-        <div class="ad-box ad-desktop">{% include /ads/banner/07.html %}</div>
-        <div class="ad-box ad-mobile">{% include /ads/banner/04.html %}</div>
-    </div>
-
-    {% include /ads/gobloggugel/sosmed.html %}
-    {% include footer.html %}
-
-</body>
+</div></body>
 </html>
-    
